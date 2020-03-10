@@ -5,7 +5,9 @@
  */
 package controladores;
 
+import java.io.IOException;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import modelos.Usuario;
 
 /**
@@ -35,8 +37,12 @@ public class AuthController {
         else{
             return "index?faces-redirect=true";
         }
+    }  
+    public void logout() throws IOException{
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().invalidateSession();
+        context.getExternalContext().redirect("index.xhtml");
     }
-    
     
     public Usuario getUser() {
         return user;
