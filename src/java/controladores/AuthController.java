@@ -5,6 +5,7 @@
  */
 package controladores;
 
+import contracts.IRegistro;
 import java.io.IOException;
 import java.util.List;
 import javax.faces.context.FacesContext;
@@ -14,7 +15,7 @@ import modelos.Usuario;
  *
  * @author informatica
  */
-public class AuthController {
+public class AuthController implements IRegistro {
 
     private Usuario user;
     private List<Usuario> listaUsuarios;
@@ -58,6 +59,31 @@ public class AuthController {
 
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
+    }
+
+    @Override
+    public void verUsuarios() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void verBitacora() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void verSolicitudes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void registrarSolicitud() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void verMisSolicitudes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
