@@ -15,6 +15,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import modelos.Administrativo;
+import modelos.Bitacora;
 import modelos.Estudiante;
 import modelos.Solicitud;
 import modelos.Usuario;
@@ -24,6 +25,8 @@ import modelos.Usuario;
  * @author informatica
  */
 public class AuthController implements IRegistro {
+
+   
 
     private String correo;
     private String clave;
@@ -40,6 +43,13 @@ public class AuthController implements IRegistro {
     static private List<Solicitud> listaSolicitudes;
     
     
+    private Date fechaBit;
+    private String usua;
+    private String accion;
+    
+    private Bitacora bit;
+    static private List<Bitacora> listaBitacora = new ArrayList<>();
+    
     public AuthController() {
         listaUsuarios = new ArrayList<Usuario>();
         Estudiante est = new Estudiante("estudiante@upb.edu.co", "est123", "Angela", "Remolina", 'F', 'E');
@@ -51,6 +61,9 @@ public class AuthController implements IRegistro {
     }
 
     public void login() throws IOException{
+        
+        
+        
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext ex = context.getExternalContext();
         user = null;
@@ -77,12 +90,19 @@ public class AuthController implements IRegistro {
             ex.redirect("index.xhtml");
         }
         
+        Date today = Calendar.getInstance().getTime();
+        bit = new Bitacora(today,user.getCorreo(),"inició sesión");
+        listaBitacora.add(bit);
         
     }  
     public void logout() throws IOException{
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().invalidateSession();
         context.getExternalContext().redirect("index.xhtml");
+        
+        Date today = Calendar.getInstance().getTime();
+        bit = new Bitacora(today,user.getCorreo(),"cerró sesión");
+        listaBitacora.add(bit);
     }
     
 
@@ -109,6 +129,10 @@ public class AuthController implements IRegistro {
         listaSolicitudes = new ArrayList<>();
         listaSolicitudes.add(solicitud);
         
+        
+        bit = new Bitacora(today,user.getCorreo(),"registró una solicitud");
+        listaBitacora.add(bit);
+        
     }
 
     @Override
@@ -126,6 +150,7 @@ public class AuthController implements IRegistro {
         else{
             return false;
         }
+        
         
     }
     
@@ -212,5 +237,43 @@ public class AuthController implements IRegistro {
         this.listaSolicitudes = listaSolicitudes;
     }
 
-    
+    public Date getFechaBit() {
+        return fechaBit;
+    }
+
+    public void setFechaBit(Date fechaBit) {
+        this.fechaBit = fechaBit;
+    }
+
+    public String getUsua() {
+        return usua;
+    }
+
+    public void setUsua(String usua) {
+        this.usua = usua;
+    }
+
+    public String getAccion() {
+        return accion;
+    }
+
+    public void setAccion(String accion) {
+        this.accion = accion;
+    }
+
+    public Bitacora getBit() {
+        return bit;
+    }
+
+    public void setBit(Bitacora bit) {
+        this.bit = bit;
+    }
+
+     public static List<Bitacora> getListaBitacora() {
+        return listaBitacora;
+    }
+
+    public static void setListaBitacora(List<Bitacora> aListaBitacora) {
+        listaBitacora = aListaBitacora;
+    }
 }
