@@ -37,7 +37,7 @@ public class AuthController implements IRegistro {
     private Date fecha;
     
     private Solicitud solicitud;
-    private List<Solicitud> listaSolicitudes;
+    static private List<Solicitud> listaSolicitudes;
     
     
     public AuthController() {
@@ -105,14 +105,7 @@ public class AuthController implements IRegistro {
     public void registrarSolicitud() {
         Date today = Calendar.getInstance().getTime();
         solicitud = new Solicitud(solicitudTexto, prioridad, user.getCorreo(), today);
-        /*
-        //String texto, char prioridad, String u, Date fecha
-        solicitud.setTexto(solicitudTexto);
-        solicitud.setPrioridad(prioridad);
-        Date today = Calendar.getInstance().getTime();
-        solicitud.setFecha(today);
-        solicitud.setU(user.getCorreo());
-        */
+
         listaSolicitudes = new ArrayList<>();
         listaSolicitudes.add(solicitud);
         
@@ -121,6 +114,19 @@ public class AuthController implements IRegistro {
     @Override
     public void verMisSolicitudes() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public boolean checkUser(){
+        if(user.getCorreo().equals(solicitud.getU())){
+            return true;
+        }
+        if(listaSolicitudes==null){
+            return false;
+        }
+        else{
+            return false;
+        }
+        
     }
     
     public Usuario getUser() {
