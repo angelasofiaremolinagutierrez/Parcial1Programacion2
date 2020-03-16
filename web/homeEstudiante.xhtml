@@ -15,13 +15,15 @@
                 <i class="fa fa-list">&emsp;</i> Ver mis solicitudes
             </h:outputLink>
             
+            <h:form>
+                <h:commandButton action="#{authController.logout()}" value="LOG OUT"/>
+            </h:form>
+            
         </div>
     </ui:define>
 
     <ui:define name="contenido">
-        <h:form>
-            <h:commandButton action="#{authController.logout()}" value="LOG OUT"/>
-        </h:form>
+        
     </ui:define>
 
 </ui:composition>

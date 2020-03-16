@@ -16,10 +16,13 @@
                 <i class="fa fa-user">&emsp;</i> Ver solicitudes
             </h:outputLink>
             
-            
             <h:outputLink styleClass="list-group-item list-group-item-action bg-light" value="bitacora.xhtml"> 
                 <i class="fa fa-clock">&emsp;</i> Ver bitácora
             </h:outputLink>
+             
+             <h:form>
+                <h:commandButton action="#{authController.logout()}" value="LOG OUT"/>
+            </h:form>
 
         </div>
     </ui:define>
