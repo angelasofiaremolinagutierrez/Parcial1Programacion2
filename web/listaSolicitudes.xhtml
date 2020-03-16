@@ -37,29 +37,26 @@
             <h:dataTable value="#{authController.listaSolicitudes}" rendered="#{!authController.listEmpty}"
                          var="s" border="1"  >
                 <h:column>
-                    <f:facet name="header">Nombre</f:facet>
-                        #{s}
+                    <f:facet name="header">Solicitud</f:facet>
+                        #{s.texto}
                 </h:column>
 
                 <h:column>
-                    <f:facet name="header">Apellido</f:facet>
-                        #{u.apellido}
+                    <f:facet name="header">Prioridad</f:facet>
+                        #{s.prioridad}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Correo</f:facet>
-                    #{u.correo}
+                    <f:facet name="header">Fecha</f:facet>
+                    #{s.fecha}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Genero</f:facet>
-                    #{u.genero}
+                    <f:facet name="header">Usuario</f:facet>
+                    #{s.u}
                 </h:column>
-                <h:column>
-                    <f:facet name="header">Tipo</f:facet>
-                    #{u.tipo}
-                </h:column>
+                
             </h:dataTable>
             
-            <h:outputText value="No hay usuarios registrados" rendered="#{usuarioController.listEmpty}" />
+            <h:outputText value="No hay solicitudes registrados" rendered="#{authController.listEmpty}" />
             
 
         </h:form>
