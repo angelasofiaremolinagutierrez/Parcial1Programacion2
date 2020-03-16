@@ -13,6 +13,12 @@ public class Estudiante extends Usuario{
     private String facultad;
     private boolean becado;
     private char estado;
+
+    public Estudiante(String correo, String clave, String nombre, String apellido, char genero, char tipo) {
+        super(correo, clave, nombre, apellido, genero, tipo);
+    }
+    
+    
     
     public String getFacultad() {
         return facultad;

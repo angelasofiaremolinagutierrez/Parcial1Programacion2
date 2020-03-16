@@ -7,9 +7,9 @@
     <ui:define name="contenido">
         <h:form>
             Correo:
-            <h:inputText value="#{authController.user.correo}" />
+            <h:inputText value="#{authController.correo}" />
             Contraseña:
-            <h:inputSecret value="#{authController.user.clave}" />
+            <h:inputSecret value="#{authController.clave}" />
             
             <h:commandButton action="#{authController.login()}" value = "LOG IN" />
             

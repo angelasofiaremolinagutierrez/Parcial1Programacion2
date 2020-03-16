@@ -15,12 +15,17 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private char genero;
+    private char tipo;
 
-
-    public Usuario() {
+    public Usuario(String correo, String clave, String nombre, String apellido, char genero, char tipo) {
+        this.correo = correo;
+        this.clave = clave;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.genero = genero;
+        this.tipo = tipo;
     }
 
-    
     
     public String getCorreo() {
         return correo;
@@ -60,6 +65,14 @@ public class Usuario {
 
     public void setGenero(char genero) {
         this.genero = genero;
+    }
+
+    public char getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(char tipo) {
+        this.tipo = tipo;
     }
 
     

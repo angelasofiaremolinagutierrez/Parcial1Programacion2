@@ -10,5 +10,8 @@ package modelos;
  * @author informatica
  */
 public class Administrativo extends Usuario{
-    
+
+    public Administrativo(String correo, String clave, String nombre, String apellido, char genero, char tipo) {
+        super(correo, clave, nombre, apellido, genero, tipo);
+    }
 }

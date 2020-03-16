@@ -7,8 +7,16 @@ package controladores;
 
 import contracts.IRegistro;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.naming.Context;
+import modelos.Administrativo;
+import modelos.Estudiante;
+import modelos.Solicitud;
 import modelos.Usuario;
 
 /**
@@ -17,27 +25,59 @@ import modelos.Usuario;
  */
 public class AuthController implements IRegistro {
 
+    private String correo;
+    private String clave;
+    
     private Usuario user;
     private List<Usuario> listaUsuarios;
     
     
+    private String solicitudTexto;
+    private char prioridad;
+    private Date fecha;
+    
+    private Solicitud solicitud;
+    private List<Solicitud> listaSolicitudes;
+    
+    
     public AuthController() {
-        user = new Usuario();
+        listaUsuarios = new ArrayList<Usuario>();
+        Estudiante est = new Estudiante("estudiante@upb.edu.co", "est123", "Angela", "Remolina", 'F', 'E');
+        listaUsuarios.add(est);
+        
+        Administrativo ad;
+        ad = new Administrativo("administrativo@upb.edu.co","ad123","Sergio","Perez",'M','A');
+        listaUsuarios.add(ad);
     }
 
-    public String login(){
+    public void login() throws IOException{
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext ex = context.getExternalContext();
+        user = null;
         
-        
-        if(this.user.getCorreo().equals("estudiante@upb.edu.co")&& (this.user.getClave()).equals("est123")){
-            
-            return "homeEstudiante?faces-redirect=true";
+        for(Usuario u:listaUsuarios){
+            if(u.getCorreo().equals(correo)&& u.getClave().equals(clave)){
+                user = u;
+                break;
+            }
         }
-        if(this.user.getCorreo().equals("administrativo@upb.edu.co")&& (this.user.getClave()).equals("ad123")){
-            return "homeAdministrativo?faces-redirect=true";
+        
+        if(user != null){
+            if(user.getTipo()=='E'){
+                ex.redirect("homeEstudiante.xhtml");
+            }
+            if(user.getTipo()=='A'){
+                ex.redirect("homeAdministrativo.xhtml");
+            }
+            else{
+                ex.redirect("index.xhtml");
+            }
         }
         else{
-            return "index?faces-redirect=true";
+            ex.redirect("index.xhtml");
         }
+        
+        
     }  
     public void logout() throws IOException{
         FacesContext context = FacesContext.getCurrentInstance();
@@ -45,21 +85,6 @@ public class AuthController implements IRegistro {
         context.getExternalContext().redirect("index.xhtml");
     }
     
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
-    }
-
-    public List<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
-
-    public void setListaUsuarios(List<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
 
     @Override
     public void verUsuarios() {
@@ -78,7 +103,19 @@ public class AuthController implements IRegistro {
 
     @Override
     public void registrarSolicitud() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Date today = Calendar.getInstance().getTime();
+        solicitud = new Solicitud(solicitudTexto, prioridad, user.getCorreo(), today);
+        /*
+        //String texto, char prioridad, String u, Date fecha
+        solicitud.setTexto(solicitudTexto);
+        solicitud.setPrioridad(prioridad);
+        Date today = Calendar.getInstance().getTime();
+        solicitud.setFecha(today);
+        solicitud.setU(user.getCorreo());
+        */
+        listaSolicitudes = new ArrayList<>();
+        listaSolicitudes.add(solicitud);
+        
     }
 
     @Override
@@ -86,6 +123,88 @@ public class AuthController implements IRegistro {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
+
+    public List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
     
+    public boolean isListEmpty(){
+        if(listaSolicitudes != null && listaSolicitudes.size()>0){
+            return false;
+        }
+        else{
+            return true;
+        }
+        
+    }
+
+    public String getSolicitudTexto() {
+        return solicitudTexto;
+    }
+
+    public void setSolicitudTexto(String solicitudTexto) {
+        this.solicitudTexto = solicitudTexto;
+    }
+
+    public char getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(char prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+
+    public Solicitud getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Solicitud solicitud) {
+        this.solicitud = solicitud;
+    }
+
+    public List<Solicitud> getListaSolicitudes() {
+        return listaSolicitudes;
+    }
+
+    public void setListaSolicitudes(List<Solicitud> listaSolicitudes) {
+        this.listaSolicitudes = listaSolicitudes;
+    }
+
     
 }
